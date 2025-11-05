@@ -33,20 +33,66 @@
 
 // ------------- CODE -------------
 #include <iostream>
+#include <iomanip>
+#include <cstring>
 
 using namespace std;
 
-// Function prototypes (if any)
 
+struct Song {
+  static const int MAX_CHARACTERS = 255;
+  char title[MAX_CHARACTERS] = {0};
+  char artist[MAX_CHARACTERS] = {0};
+  char collection[MAX_CHARACTERS] = {0};
+};
+
+// Pass the variable by reference to a function and prompt the user for the member information. Make sure to validate all input.
+void loadSongData(Song &song);
+
+// Pass the variable by constant reference to a function to print the members of the struct variable.
+void print(const Song &song);
 
 // Main function
 // https://en.cppreference.com/w/cpp/language/main_function.html
-int main(int argc, char* argv[]) {
-  cout << "Hello, World!" << endl;
+int main() {
+  Song song;
+  loadSongData(song);
+  cout << endl;
+  cout << endl;
+  print(song);
   return 0;
 }
 
 // Function implementations (if any)
+
+void print(const Song &song) {
+  const int tab_size = 4;
+  int col_width_title = strlen(song.title) + tab_size;
+  int col_width_artist = strlen(song.artist) + tab_size;
+  int col_width_collection = strlen(song.collection) + tab_size;
+
+  cout << left;
+  cout << setw(col_width_title) << "TITLE";
+  cout << setw(col_width_artist) << "ARTIST";
+  cout << setw(col_width_collection) << "COLLECTION";
+  cout << endl;
+
+  cout << setw(col_width_title) << song.title;
+  cout << setw(col_width_artist) << song.artist;
+  cout << setw(col_width_collection) << song.collection;
+  cout << endl;
+}
+
+void loadSongData(Song &song) {
+  cout << "TITLE: ";
+  cin.getline(song.title, Song::MAX_CHARACTERS, '\n');
+
+  cout << "ARTIST: ";
+  cin.getline(song.artist, Song::MAX_CHARACTERS, '\n');
+
+  cout << "COLLECTION: ";
+  cin.getline(song.collection, Song::MAX_CHARACTERS, '\n');
+}
 
 
 // ------------- DESIGN -------------
@@ -57,24 +103,50 @@ Program Description:
 
 Design:
 A. INPUT
-Define the input variables including name data type. 
+  char title[];
+  char artist[];
+  char collection[];
 
 B. OUTPUT
-Define the output variables including data types. 
+Same as input 
 
 C. CALCULATIONS
-Describe calculations used by algorithms in step D.  
-List all formulas. 
-If there are no calculations needed, state there are no calculations.
+NONE
 
 D. LOGIC and ALGORITHMS
-Design the logic of your program using pseudocode or flowcharts. 
-Use conditionals, loops, functions or array constructs.
-List the steps in transforming inputs into outputs. 
-https://github.com/Glen-Sasek-PCC-Instructor/2025-06-22/blob/main/Pseudocode-Reference.txt
+DECLARE Song song
+CALL loadSongData
+CALL print
 
+FUNCTION void loadSongData
+  PROMPT: "TITLE: "
+  INPUT: title
+
+  PROMPT: "ARTIST: "
+  INPUT: artist
+
+  PROMPT: "COLLECTION: "
+  INPUT: collection
+END FUNCTION
+
+FUNCTION void print
+  LABEL: "TITLE: "
+  DATA: title
+
+  LABEL: "ARTIST: "
+  DATA: artist
+
+  LABEL: "COLLECTION: "
+  DATA: collection
+END FUNCTION
 
 SAMPLE RUNS
-Copy from assignment document.
+TITLE: The Best Song
+ARTIST: Frank Itt
+COLLECTION: Bass Itt
+
+TITLE            ARTIST       COLLECTION
+The Best Song    Frank Itt    Bass Itt
 
 */
+
